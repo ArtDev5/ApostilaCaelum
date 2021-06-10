@@ -4,49 +4,35 @@ import br.com.caelum.ed.Aluno;
 
 public class Vetor {
 	
-	private Aluno[] alunos = new Aluno[100000];
+	private Object[] objetos = new Object[100000];
 	
-	private int totalDeAlunos = 0;
+	private int totalDeObjetos = 0;
 	
-	public void adiciona(Aluno aluno) {
+	public void adiciona(Object objeto) {
 		this.garantaEspaco();
-		this.alunos[this.totalDeAlunos] = aluno;
-		this.totalDeAlunos++;
+		this.objetos[this.totalDeObjetos] = objeto;
+		this.totalDeObjetos++;
 	}
 	
-//	public void adiciona(int posicao, Aluno aluno) {
-//		this.garantaEspaco();
-//		if(!this.posicaoOcupada(posicao)) {
-//			throw new IllegalArgumentException("Posição inválida!");
-//		}
-//		
-//		for(int i = this.totalDeAlunos - 1; i >= posicao; i--) {
-//			this.alunos[i+1] = this.alunos[i];
-//		}
-//		
-//		this.alunos[posicao] = aluno;
-//		this.totalDeAlunos++;
-//	}
-	
-	public void adiciona(int posicao, Aluno aluno) {
+	public void adiciona(int posicao, Object objeto) {
 		this.garantaEspaco();
 		if (!this.posicaoValida(posicao)) {
 			throw new IllegalArgumentException("Posicao inválida");
 		}
 		
-		for (int i = this.totalDeAlunos - 1; i >= posicao; i--) {
-			this.alunos[i + 1] = this.alunos[i];
+		for (int i = this.totalDeObjetos - 1; i >= posicao; i--) {
+			this.objetos[i + 1] = this.objetos[i];
 		}
-		this.alunos[posicao] = aluno;
-		this.totalDeAlunos++;
+		this.objetos[posicao] = objeto;
+		this.totalDeObjetos++;
 	}
 
 	
-	public Aluno pega(int posicao) {
+	public Object pega(int posicao) {
 		if(!this.posicaoOcupada(posicao)) {
 			throw new IllegalArgumentException("Posição inválida!");
 		}
-		return this.alunos[posicao];
+		return this.objetos[posicao];
 		
 	}
 	
@@ -55,16 +41,16 @@ public class Vetor {
 			throw new IllegalArgumentException("Posição inválida!");
 		}
 		
-		for(int i = posicao; i < this.totalDeAlunos-1;i++) {
-			this.alunos[i] = this.alunos[i+1];
+		for(int i = posicao; i < this.totalDeObjetos-1;i++) {
+			this.objetos[i] = this.objetos[i+1];
 		}
 		
-		this.totalDeAlunos--;
+		this.totalDeObjetos--;
 	}
 	
 	public boolean contem(Aluno aluno) {
-		for (int i = 0; i < this.totalDeAlunos; i++) {
-			if (aluno == this.alunos[i]) {
+		for (int i = 0; i < this.totalDeObjetos; i++) {
+			if (aluno == this.objetos[i]) {
 			return true;
 			}
 		
@@ -74,42 +60,42 @@ public class Vetor {
 	}
 	
 	public int tamanho() {
-		return this.totalDeAlunos;
+		return this.totalDeObjetos;
 	}
 	
 	private boolean posicaoValida(int posicao){
-		return posicao >= 0 && posicao <= this.totalDeAlunos;
+		return posicao >= 0 && posicao <= this.totalDeObjetos;
 	}
 	
 	private boolean posicaoOcupada(int posicao) {
-		return posicao >= 0 && posicao < this.totalDeAlunos;
+		return posicao >= 0 && posicao < this.totalDeObjetos;
 	}
 	
 	private void garantaEspaco() {
-		if(this.totalDeAlunos == this.alunos.length) {
-			Aluno[] novoArray = new Aluno[this.alunos.length * 2];
-			for(int i = 0; i< this.alunos.length; i++) {
-				novoArray[i] = this.alunos[i];
+		if(this.totalDeObjetos == this.objetos.length) {
+			Object[] novoArray = new Aluno[this.objetos.length * 2];
+			for(int i = 0; i< this.objetos.length; i++) {
+				novoArray[i] = this.objetos[i];
 			}
 			
-			this.alunos = novoArray;
+			this.objetos = novoArray;
 		}
 	}
 	
 	public String toString() {
 		
-		if(this.totalDeAlunos == 0) {
+		if(this.totalDeObjetos == 0) {
 			return "[]";
 		}
 		StringBuilder builder = new StringBuilder();
 		builder.append("[");
 		
-		for(int i = 0; i < this.totalDeAlunos - 1; i++) {
-			builder.append(this.alunos[i]);
+		for(int i = 0; i < this.totalDeObjetos - 1; i++) {
+			builder.append(this.objetos[i]);
 			builder.append(", ");
 		}
 		
-		builder.append(this.alunos[this.totalDeAlunos-1]);
+		builder.append(this.objetos[this.totalDeObjetos-1]);
 		builder.append("]");
 		
 		return builder.toString();
