@@ -9,23 +9,38 @@ public class Vetor {
 	private int totalDeAlunos = 0;
 	
 	public void adiciona(Aluno aluno) {
-		garantaEspaco();
+		this.garantaEspaco();
 		this.alunos[this.totalDeAlunos] = aluno;
 		this.totalDeAlunos++;
 	}
 	
+//	public void adiciona(int posicao, Aluno aluno) {
+//		this.garantaEspaco();
+//		if(!this.posicaoOcupada(posicao)) {
+//			throw new IllegalArgumentException("Posição inválida!");
+//		}
+//		
+//		for(int i = this.totalDeAlunos - 1; i >= posicao; i--) {
+//			this.alunos[i+1] = this.alunos[i];
+//		}
+//		
+//		this.alunos[posicao] = aluno;
+//		this.totalDeAlunos++;
+//	}
+	
 	public void adiciona(int posicao, Aluno aluno) {
-		if(!this.posicaoOcupada(posicao)) {
-			throw new IllegalArgumentException("Posição inválida!");
+		this.garantaEspaco();
+		if (!this.posicaoValida(posicao)) {
+			throw new IllegalArgumentException("Posicao inválida");
 		}
 		
-		for(int i = this.totalDeAlunos - 1; i >= posicao; i--) {
-			this.alunos[i+1] = this.alunos[i];
+		for (int i = this.totalDeAlunos - 1; i >= posicao; i--) {
+			this.alunos[i + 1] = this.alunos[i];
 		}
-		
 		this.alunos[posicao] = aluno;
 		this.totalDeAlunos++;
 	}
+
 	
 	public Aluno pega(int posicao) {
 		if(!this.posicaoOcupada(posicao)) {
@@ -48,10 +63,11 @@ public class Vetor {
 	}
 	
 	public boolean contem(Aluno aluno) {
-		for(int i = 0; i< this.totalDeAlunos; i++) {
-			if(aluno.equals(this.alunos[i])) {
-				return true;
+		for (int i = 0; i < this.totalDeAlunos; i++) {
+			if (aluno == this.alunos[i]) {
+			return true;
 			}
+		
 		}
 		
 		return false;
@@ -59,6 +75,10 @@ public class Vetor {
 	
 	public int tamanho() {
 		return this.totalDeAlunos;
+	}
+	
+	private boolean posicaoValida(int posicao){
+		return posicao >= 0 && posicao <= this.totalDeAlunos;
 	}
 	
 	private boolean posicaoOcupada(int posicao) {
@@ -74,6 +94,25 @@ public class Vetor {
 			
 			this.alunos = novoArray;
 		}
+	}
+	
+	public String toString() {
+		
+		if(this.totalDeAlunos == 0) {
+			return "[]";
+		}
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		
+		for(int i = 0; i < this.totalDeAlunos - 1; i++) {
+			builder.append(this.alunos[i]);
+			builder.append(", ");
+		}
+		
+		builder.append(this.alunos[this.totalDeAlunos-1]);
+		builder.append("]");
+		
+		return builder.toString();
 	}
 
 }
